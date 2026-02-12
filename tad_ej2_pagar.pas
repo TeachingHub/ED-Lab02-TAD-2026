@@ -1,26 +1,65 @@
-unit uPagoBizum;
+{ tad_ej2_pagar.pas - Programa Principal }
+program tad_ej2_pagar;
 
-interface
+uses
+   uPagoTarjeta, uPagoTransferencia, uPagoBizum;
 
-procedure IniciarPago;
-procedure RealizarPago(numeroTelefono: string; monto: real);
-function ValidarPago(numeroTelefono: string): boolean;
+var
+  cantidad: real;
+  pagoValido: boolean;
+  opcion: integer;
+  data : string;
 
-implementation
-
-procedure IniciarPago;
 begin
-  write('Introduce el número de teléfono para Bizum: ');
-end;
+    
+    // Leer monto
+    write('Introduce la cantidad a pagar: ');
+    readln(cantidad);
+    
+    // Seleccionar método de pago
+    writeln('Selecciona el método de pago:');
 
-procedure RealizarPago(numeroTelefono: string; monto: real);
-begin
-  writeln('Realizando pago por Bizum de ', monto:0:2, ' euros al número ', numeroTelefono);
-end;
+    writeln('1. Tarjeta de crédito');
+    writeln('2. Transferencia bancaria');
+    writeln('3. Bizum');
+    write('Opción: ');
+    readln(opcion);
 
-function ValidarPago(numeroTelefono: string): boolean;
-begin
-  ValidarPago := (length(numeroTelefono) = 9);
-end;
+    // Realizar pago
+    case opcion of
+        1: 
+        begin
+          uPagoTarjeta.IniciarPago;
+          readln(data);
+          uPagoTarjeta.RealizarPago(data, cantidad);
+          pagoValido := uPagoTarjeta.ValidarPago(data);
+        end;
+        2:
+        begin
+          uPagoTransferencia.IniciarPago;
+          readln(data);
+          uPagoTransferencia.RealizarPago(data, cantidad);
+          pagoValido := uPagoTransferencia.ValidarPago(data);
+        end;
+        3:
+        begin
+          uPagoBizum.IniciarPago;
+          readln(data);
+          uPagoBizum.RealizarPago(data, cantidad);
+          pagoValido := uPagoBizum.ValidarPago(data);
+        end;
 
+        else
+        begin
+          writeln('Opción no válida');
+        end;
+      end;
+      if pagoValido then
+      begin
+        writeln('Pago realizado correctamente');
+      end
+      else
+      begin
+        writeln('Pago no válido');
+      end;
 end.
