@@ -4,7 +4,8 @@ interface
 
 type
     TComplejo = record
-
+        r: Double;
+        i: Double;
     end;
 
 procedure CrearComplejo(var c: TComplejo; r: Double; i: Double);
@@ -22,53 +23,66 @@ implementation
 
 procedure CrearComplejo(var c: TComplejo; r: Double; i: Double);
 begin
-    // To be implemented
+    c.r := r;
+    c.i := i;
 end;
 
 procedure SetParteReal(var c: TComplejo; r: Double);
 begin
-    // To be implemented
+    c.r := r;
 end;
 
 procedure SetParteImaginaria(var c: TComplejo; i: Double);
 begin
-    // To be implemented
+    c.i := i;
 end;
 
 function GetParteReal(c: TComplejo): Double;
 begin
-    // To be implemented
+    GetParteReal := c.r;
 end;
 
 function GetParteImaginaria(c: TComplejo): Double;
 begin
-    // To be implemented
+    GetParteImaginaria := c.i;
 end;
 
 procedure Sumar(var res: TComplejo; c1, c2: TComplejo);
 begin
-    // To be implemented
+    res.r := c1.r + c2.r;
+    res.i := c1.i + c2.i;
 end;
 
 procedure Restar(var res: TComplejo; c1, c2: TComplejo);
 begin
-    // To be implemented
+    res.r := c1.r - c2.r;
+    res.i := c1.i - c2.i;
 end;
 
 procedure Multiplicar(var res: TComplejo; c1, c2: TComplejo);
 begin
-    // To be implemented
+    res.r := c1.r * c2.r - c1.i * c2.i;
+    res.i := c1.r * c2.i + c1.i * c2.r;
 end;
 
 procedure Dividir(var res: TComplejo; c1, c2: TComplejo);
 var
+    denom: Double;
 begin
-    // To be implemented
+    denom := c2.r * c2.r + c2.i * c2.i;
+    res.r := (c1.r * c2.r + c1.i * c2.i) / denom;
+    res.i := (c1.i * c2.r - c1.r * c2.i) / denom;
 end;
 
 procedure Potencia(var res: TComplejo; c: TComplejo; exponente: Integer);
+var
+    i: Integer;
+    temp: TComplejo;
 begin
-    // To be implemented
+    CrearComplejo(res, 1, 0);
+    temp := c;
+    for i := 1 to exponente do
+        Multiplicar(res, res, c)
 end;
 
 end.
